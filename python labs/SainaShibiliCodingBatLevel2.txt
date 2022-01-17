@@ -1,0 +1,106 @@
+def string_times(str, n):
+  return str * n
+
+def front_times(str, n):
+  return str[:3] * n
+
+def string_bits(str):
+  return str[::2]
+
+def string_splosion(str):
+  return "".join([str[:i + 1] for i in range(len(str))])
+
+def last2(str):
+  return sum([1 for i in range(len(str) - 2) if str[i: i + 2] == str[-2:]])
+
+def array_count9(nums):
+  return nums.count(9)
+
+def array_front9(nums):
+  return 9 in nums[:4]
+
+def array123(nums):
+  return True in [True for i in range(len(nums) - 2) if nums[i] == 1 and nums[i+1] == 2 and nums[i+2] == 3]
+
+def string_match(a, b):
+  return sum([1 for i in range(min(len(a), len(b)) - 1) if a[i] == b[i] and a[i + 1] == b[i + 1]])
+
+def make_bricks(small, big, goal):
+  return ((big * 5) +  small >= goal and small >= goal % 5)
+  
+def lone_sum(a, b, c):
+  return (a, 0)[a == c or a==b] + (b, 0)[b==a or b==c] + (c, 0)[c==a or c==b]
+
+def lucky_sum(a, b, c):
+  return (a, 0)[a == 13] + (b, 0)[a == 13 or b == 13] + (c, 0)[a == 13 or b == 13 or c == 13]
+
+def no_teen_sum(a, b, c):
+  return sum([(i, 0)[i >= 13 and i <= 19 and i != 15 and i != 16] for i in [a, b, c]])
+
+def round_sum(a, b, c):
+  return sum([(num - (num % 10), num + (10 - (num % 10)))[num % 10 >= 5] for num in [a, b, c]])
+
+def close_far(a, b, c):
+  return (abs(a - b) <= 1 and abs(a - c) >= 2 and abs(b - c) >= 2) or (abs(a - c) <= 1 and abs(a - b) >= 2 and abs(c - b) >= 2)
+
+def make_chocolate(small, big, goal):
+  return (-1, (goal - 5 * big, goal % 5)[goal < 5 * big])[small >= goal - 5 * big and small >= goal%5]
+
+def double_char(str):
+  return "".join([i + i for i in str])
+
+def count_hi(str):
+  return str.count("hi")
+
+def cat_dog(str):
+  return str.count("cat") == str.count("dog")
+
+def count_code(str):
+  return sum([1 for i in range(len(str) - 3) if str[i : i + 2] == "co" and str[i + 3] == "e"])
+
+def end_other(a, b):
+  return (b.lower().endswith(a.lower()) or a.lower().endswith(b.lower())) 
+
+def xyz_there(str):
+  return str[:3] == "xyz" or True in [True for i in range(len(str) - 2) if str[i: i+3] == "xyz" and str[i-1] != "."]
+
+def count_evens(nums):
+  return sum([1 for i in nums if not i % 2])
+  
+def big_diff(nums):
+  return max(nums) - min(nums)
+
+def centered_average(nums):
+  return (sum(nums) - min(nums) - max(nums)) // (len(nums) - 2)
+
+def sum13(nums):
+  return sum([(0, nums[i])[nums[i] != 13 and (nums[i - 1] != 13 or i == 0)] for i in range(len(nums))])
+
+def sum67(nums):
+  record = True
+  total = 0
+  for n in nums:
+      if n == 6:
+          record = False
+      if record:
+          total += n
+          continue
+      if n == 7:
+          record = True
+  return total
+
+def has22(nums):
+  return True in [True for i in range(len(nums) - 1) if nums[i] == 2 and nums[i + 1] == 2]
+
+
+
+
+
+
+
+
+   
+
+
+      
+
