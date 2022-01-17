@@ -1,0 +1,184 @@
+import sys; args = sys.argv[1:]
+pzls = open(args[0], 'r').read().splitlines()
+#pzls = open("/Users/saina/Documents/School/AI Code/Sudoku/puzzles.txt").read().splitlines()
+
+
+import math, time
+
+
+gSide, gHeight, gWidth = 9, 3, 3
+
+gStats = [0, 0, 0, 0, 0] #isImpossible, puzzle.find("."), findBestPos, bruteForce, return bF
+
+rowConstraintSet = [{*range(i, i + 9)} for i in range(0, gSide * gSide, gSide)]
+colConstraintSet = [{*range(i, gSide * gSide, gSide)} for i in range(gSide)]
+subBlockConstraintSet = [{0, 1, 2, 9, 10, 11, 18, 19, 20}, {3, 4, 5, 12, 13, 14, 21, 22, 23}, {6, 7, 8, 15, 16, 17, 24, 25, 26},
+    {27, 28, 29, 36, 37, 38, 45, 46, 47}, {30, 31, 32, 39, 40, 41, 48, 49, 50}, {33, 34, 35, 42, 43, 44, 51, 52, 53}, 
+    {54, 55, 56, 63, 64, 65, 72, 73, 74}, {57, 58, 59, 66, 67, 68, 75, 76, 77}, {60, 61, 62, 69, 70, 71, 78, 79, 80}
+    ]
+
+listOfConstraintSets = rowConstraintSet + colConstraintSet + subBlockConstraintSet
+positionOfConstraintSets = [[csIdx for csIdx,cs in enumerate(listOfConstraintSets) if p in cs] for p in range(gSide * gSide)]
+nbrs = [{p for cs in listOfConstraintSets for p in cs if pos in cs} - {pos} for pos in range(gSide * gSide)]
+
+gSymbolSet = {}
+
+#reads in puzzles and calls solve puzzle on each of them
+def readFile(pzls):
+    global gSymbolSet
+
+    setDimensions(pzls[0]), makeSymbolSet(pzls[0])
+    TOTALSTART = time.process_time()
+
+    for i, pzl in enumerate(pzls):
+        start_time = time.process_time()
+        solvedPzl = solvePuzzle(pzl)
+        print(i + 1,":", pzl)
+        print("".join([" "] * len(str(i + 1))), " ", solvedPzl, checkSum(solvedPzl), time.process_time() - start_time)
+    
+    print(time.process_time() - TOTALSTART)
+
+#solves the puzzle
+def solvePuzzle(pzl):
+    possibleSymbols = {l:posFromLocSet(pzl, l) for l in range(gSide * gSide)}
+    return bruteForce(pzl, -2, possibleSymbols)
+
+#sets global side dimension and the height and width of the sub block
+def setDimensions(pzl):
+    global gSide
+    gSide = int(math.sqrt(len(pzl)))
+
+#sets the possible symbols of the puzzle
+def makeSymbolSet(pzl):
+    global gSymbolSet
+    gSymbolSet = {*"123456789"}
+    gSymbolSet.update(*pzl.replace(".", ""))
+
+#checks the sum of ascii vals for each char - len(pzl) * ascii val of min char
+def checkSum(pzl):
+    asciiVals = [ord(ch) for ch in pzl]
+    return sum(asciiVals) - len(pzl) * min(asciiVals)
+
+#returns a list with all the rows
+def makeRows(pzl):
+    return [pzl[i * gSide : i * gSide + gSide] for i in range(gSide)]
+
+#returns a list with all the cols
+def makeColumns(pzl):
+    col = [""] * gSide
+    for i in range(gSide): 
+        for j in range(gSide):
+            col[i] += pzl[i + j * gSide]
+    return col
+
+#returns a list with all the sub-blocks
+def makeSubBlocks(pzl):
+    return [
+        pzl[:3] + pzl[9:12] + pzl[18:21],
+        pzl[3:6] + pzl[12:15] + pzl[21:24],
+        pzl[6:9] + pzl[15:18] + pzl[24:27],
+        pzl[27:30] + pzl[36:39] + pzl[45:48],
+        pzl[30:33] + pzl[39:42] + pzl[48:51],
+        pzl[33:36] + pzl[42:45] + pzl[51:54],
+        pzl[54:57] + pzl[63:66] + pzl[72:75],
+        pzl[57:60] + pzl[66:69] + pzl[75:78],
+        pzl[60:63] + pzl[69:72] + pzl[78:81]
+    ]
+
+#determines one row based on a given loc
+def makeOneRow(pzl, loc):
+    for s in rowConstraintSet:
+        if loc in s:
+            locSet = s
+            break
+    
+    return "".join([pzl[i] for i in locSet])
+
+#determines one col based on a given loc
+def makeOneCol(pzl, loc):
+    for s in colConstraintSet:
+        if loc in s:
+            locSet = s
+            break
+    
+    return "".join([pzl[i] for i in locSet])
+
+#determines one sub block based on a given loc
+def makeOneSub(pzl, loc):
+    locSet = {}
+    for s in subBlockConstraintSet:
+        if loc in s:
+            locSet = s
+            break
+    
+    return "".join([pzl[i] for i in locSet])
+
+#determines if the sudoku cannot be solved for the whole puzzle
+def isImpossible(pzl):
+    for row in makeRows(pzl):
+        if len({*row.replace(".", "")}) < len(row.replace(".", "")):
+            return True
+    for col in makeColumns(pzl):
+        if len({*col.replace(".", "")}) < len(col.replace(".", "")):
+            return True
+    for block in makeSubBlocks(pzl):
+        if len({*block.replace(".", "")}) < len(block.replace(".", "")):
+            return True
+    return False
+
+#determines if sudoku cannot be solved based on a location change
+def isImpossibleLoc(pzl, loc):
+    if loc == -2: return isImpossible(pzl)
+    row, col, block = makeOneRow(pzl, loc), makeOneCol(pzl, loc), makeOneSub(pzl, loc)
+    return len({*row} - {'.'}) < len(row.replace(".", "")) or len({*col} - {'.'}) < len(col.replace(".", "")) or len({*block} - {'.'}) < len(block.replace(".", ""))
+
+#determines the possible symbols of a loc in a pzl
+def posFromLocSet(pzl, loc):
+    return gSymbolSet - {pzl[i] for i in nbrs[loc]}
+
+def findBestPos(pzl, loc, possChoices): 
+    min, locMin, choicesMin = 10, -1, {}
+    possDots = []
+    for l, ch in enumerate(pzl):
+        if ch != '.': continue
+        pC = possChoices[l]
+        if len(pC) < 2: return [pC, l]
+        if len(pC) < min:
+            min = len(pC)
+            locMin = l
+            choicesMin = pC
+    return [choicesMin, locMin]
+
+#return solved puzzle or empty string on failure
+def bruteForce(pzl, loc, possChoices):
+    #if isImpossibleLoc(pzl, loc): return "" #if puzzle fails, return an empty string
+    if pzl.find(".") == -1: return pzl #if puzzle is filled out(and correct), return the pzl
+
+    possSym, dotIdx = findBestPos(pzl, loc, possChoices)
+
+    for ch in possSym: #all possible symbols
+        subPzl = pzl[:dotIdx] + ch + pzl[dotIdx + 1:] #replaces best period with char
+
+        pC = possChoices.copy()
+        #pC = {l : possChoices[l] for l in possChoices}
+        for l in nbrs[dotIdx]: pC[l] = pC[l] - {ch}
+
+        bF = bruteForce(subPzl, dotIdx, pC) #recursive call with subpzl
+        if bF: return bF #if the recursive call is not empty, return the pzl
+    return "" #if parses through every possibility and still fails
+
+#prints out puzzle 
+def printPuzzle(pzl):  
+    row = [""] * gHeight
+
+    for i in range(len(pzl)//gSide):
+        for j in range(len(pzl)//gSide):
+            row[i % 3] += pzl[i * gSide + j]
+            if (j + 1) % 3 == 0:
+                row[i % 3] += " "
+        if (i + 1) % 3 == 0:
+            print("\n".join(row) + "\n")
+            row = [""] * gHeight
+    
+readFile(pzls)
+#Saina Shibili, 6, 2023
