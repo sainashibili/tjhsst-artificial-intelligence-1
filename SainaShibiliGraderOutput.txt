@@ -1,0 +1,28 @@
+Test Vmh start for Saina Shibili of pd 6 with script of Wed Dec  8 14:46:28 2021
+Summary for Saina Shibili of pd 6: score of 8 / 10. The mistakes were:
+  TEST 6: ['..................OOO.....OOO.....OXO......X....................']
+  EXPECTED: {33, 37, 11, 17, 21, 25, 29}
+  OUTPUT:
+    ........
+    ........
+    ..ooo...
+    ..ooo...
+    ..oxo...
+    ...x....
+    ........
+    ........
+    Possible moves: {42, 44, 50, 51, 52}
+    
+ 
+  TEST 8: ['ooooooo.ooooooo.oxxoxoxxoxoxoxxxooxoxxxxoxoxxxxxooxxxxxxoxxxxxxx', 'x']
+  EXPECTED: No moves possible
+  OUTPUT:
+    ooooooo.
+    ooooooo.
+    oxxoxoxx
+    oxoxoxxx
+    ooxoxxxx
+    oxoxxxxx
+    ooxxxxxx
+    oxxxxxxx
+    Possible moves: {7}

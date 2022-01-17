@@ -1,0 +1,852 @@
+........
+........
+...*....
+..*ox...
+...xo*..
+....*...
+........
+........
+
+
+...........................ox......xo........................... 2/2
+Possible moves for x: 37, 19, 26, 44
+x plays to 44
+........
+........
+........
+...ox*..
+...xx...
+...*x*..
+........
+........
+
+
+...........................ox......xx.......x................... 4/1
+Possible moves for o: 29, 45, 43
+
+o plays to 43
+........
+........
+..*.....
+..*ox...
+..*ox...
+..*ox...
+..*.....
+........
+
+
+...........................ox......ox......ox................... 3/3
+Possible moves for x: 26, 42, 34, 18, 50
+
+x plays to 50
+........
+........
+.....*..
+...ox*..
+...ox*..
+...xx*..
+..x*.*..
+........
+
+
+...........................ox......ox......xx.....x............. 5/2
+Possible moves for o: 37, 53, 21, 51, 29, 45
+
+o plays to 29
+........
+........
+..***.*.
+..*ooo..
+..*ox...
+...xx...
+..x.....
+........
+
+
+...........................ooo.....ox......xx.....x............. 4/4
+Possible moves for x: 19, 34, 18, 22, 20, 26
+
+x plays to 34
+........
+........
+........
+...ooo..
+..xxx...
+.**xx*..
+..x**...
+.*......
+
+
+...........................ooo....xxx......xx.....x............. 6/3
+Possible moves for o: 45, 41, 51, 42, 52, 57
+
+o plays to 51
+........
+........
+..*.*.*.
+..*ooo..
+..xox...
+..*ox...
+..xo*...
+..*.....
+
+
+...........................ooo....xox......ox.....xo............ 4/6
+Possible moves for x: 52, 20, 18, 22, 42, 26, 58
+
+x plays to 20
+........
+...*....
+...*x*..
+.**xxo..
+.*xox*..
+...ox*..
+.*xo.*..
+.*......
+
+
+....................x......xxo....xox......ox.....xo............ 7/4
+Possible moves for o: 45, 25, 57, 33, 37, 53, 21, 19, 26, 11, 49
+
+o plays to 33
+........
+........
+....x.*.
+..*xxo*.
+*ooox.*.
+.**ox...
+..xo*...
+..**....
+
+
+....................x......xxo...ooox......ox.....xo............ 6/6
+Possible moves for x: 32, 22, 42, 26, 58, 52, 38, 41, 59, 30
+
+x plays to 22
+........
+.....*.*
+...*x*x.
+...xxx..
+.ooox*..
+...ox*..
+.*xo.*..
+.*......
+
+
+....................x.x....xxx...ooox......ox.....xo............ 8/5
+Possible moves for o: 13, 37, 53, 21, 19, 45, 15, 57, 49
+
+o plays to 19
+........
+..*.....
+..*ox.x.
+..*oxx..
+*ooox...
+.**ox...
+..xo*...
+..*.....
+
+
+...................ox.x....oxx...ooox......ox.....xo............ 7/7
+Possible moves for x: 32, 18, 42, 26, 58, 52, 41, 10
+
+x plays to 32
+........
+.....*.*
+...ox*x.
+.*.oxx*.
+xxxxx*..
+.*.ox*..
+.*xo....
+.*......
+
+
+...................ox.x....oxx..xxxxx......ox.....xo............ 11/4
+Possible moves for o: 30, 45, 13, 41, 25, 15, 57, 21, 37, 49
+
+o plays to 49
+........
+..**....
+..*ox.x.
+..*oxx..
+xxxxx...
+..*ox...
+.ooo*...
+.***....
+
+
+...................ox.x....oxx..xxxxx......ox....ooo............ 10/6
+Possible moves for x: 52, 11, 59, 18, 57, 42, 58, 26, 10
+
+x plays to 18
+........
+...*...*
+..xxx.x.
+.*.xxx..
+xxxxx*..
+...ox*..
+.ooo....
+........
+
+
+..................xxx.x....xxx..xxxxx......ox....ooo............ 13/4
+Possible moves for o: 45, 25, 15, 11, 37
+
+o plays to 15
+........
+.......o
+..xxx.o.
+...xxo*.
+xxxxo**.
+..*ox*..
+.ooo*...
+..**....
+
+
+...............o..xxx.o....xxo..xxxxo......ox....ooo............ 10/8
+Possible moves for x: 52, 37, 59, 42, 58, 38, 45, 30
+
+x plays to 45
+........
+...*...o
+..xxx.o.
+.**xxo..
+xxxxx*..
+...oxx*.
+.ooo....
+........
+
+
+...............o..xxx.o....xxo..xxxxx......oxx...ooo............ 12/7
+Possible moves for o: 46, 25, 11, 37, 26
+
+o plays to 26
+........
+.......o
+.*xxx*o.
+..oooo..
+xxxxx**.
+..*oxx..
+.ooo*...
+.***....
+
+
+...............o..xxx.o...oooo..xxxxx......oxx...ooo............ 10/10
+Possible moves for x: 52, 17, 21, 59, 57, 42, 58, 37, 38
+
+x plays to 21
+........
+.*****.o
+.*xxxxo.
+.*ooxo..
+xxxxx*..
+***oxx*.
+.ooo.**.
+........
+
+
+...............o..xxxxo...ooxo..xxxxx......oxx...ooo............ 12/9
+Possible moves for o: 46, 25, 37, 17, 53, 12, 40, 10, 42, 9, 54, 13, 41, 11
+
+o plays to 40
+........
+.......o
+.*xxxxo*
+.*ooxo*.
+xoxxx**.
+o.*oxx..
+*ooo*...
+.***....
+
+
+...............o..xxxxo...ooxo..xoxxx...o..oxx...ooo............ 11/11
+Possible moves for x: 48, 52, 17, 59, 57, 42, 58, 38, 23, 37, 25, 30
+
+x plays to 59
+........
+.*****.o
+.*xxxxo.
+*.ooxo..
+xoxxx*..
+o**xxx..
+.oox***.
+...x....
+
+
+...............o..xxxxo...ooxo..xoxxx...o..xxx...oox.......x.... 14/9
+Possible moves for o: 37, 24, 52, 17, 53, 12, 10, 42, 9, 54, 13, 41, 11
+
+o plays to 42
+........
+.......o
+.*xxxxo*
+**ooxo*.
+xooxx**.
+o*oxxx..
+*oox....
+***x....
+
+
+...............o..xxxxo...ooxo..xooxx...o.oxxx...oox.......x.... 13/11
+Possible moves for x: 48, 17, 56, 41, 25, 57, 58, 38, 23, 37, 24, 30
+
+x plays to 58
+........
+.*.****o
+.*xxxxo.
+**xoxo..
+xoxxx*..
+o*xxxx..
+.oxx*.*.
+.*xx*...
+
+
+...............o..xxxxo...xoxo..xoxxx...o.xxxx...oxx......xx.... 18/7
+Possible moves for o: 37, 60, 12, 24, 52, 14, 17, 25, 9, 54, 13, 41, 11, 57
+
+o plays to 11
+...**...
+..*o**.o
+..xooxo*
+*.xoxo*.
+xoxxx*..
+o.xxxx..
+*oxx....
+*.xx....
+
+
+...........o...o..xooxo...xoxo..xoxxx...o.xxxx...oxx......xx.... 16/10
+Possible moves for x: 48, 13, 3, 24, 56, 4, 23, 37, 12, 30, 10
+
+x plays to 37
+........
+.*.o..*o
+.*xooxo.
+**xoxx*.
+xoxxxx*.
+o*xxxx*.
+.oxx*.*.
+.*xx*...
+
+
+...........o...o..xooxo...xoxx..xoxxxx..o.xxxx...oxx......xx.... 18/9
+Possible moves for o: 38, 60, 24, 25, 52, 14, 17, 46, 57, 30, 9, 54, 41
+
+o plays to 14
+..***...
+..*o**oo
+..xoooo*
+*.xoox..
+xoxoxx..
+o*oxxx..
+*oxx....
+..xx....
+
+
+...........o..oo..xoooo...xoox..xoxoxx..o.oxxx...oxx......xx.... 14/14
+Possible moves for x: 48, 13, 12, 10, 41, 3, 23, 4, 24, 2
+
+x plays to 12
+...*.*..
+.**ox*oo
+.*xxxoo.
+**xoxx*.
+xoxoxx*.
+o*oxxx*.
+.oxx***.
+.*xx*...
+
+
+...........ox.oo..xxxoo...xoxx..xoxoxx..o.oxxx...oxx......xx.... 18/11
+Possible moves for o: 5, 38, 17, 53, 24, 46, 60, 10, 13, 25, 52, 3, 57, 30, 9, 54, 41
+
+o plays to 30
+..***...
+..*ox*oo
+..xxxoo*
+*.xoooo*
+xoxoxx**
+o*oxxx..
+*oxx....
+..xx....
+
+
+...........ox.oo..xxxoo...xoooo.xoxoxx..o.oxxx...oxx......xx.... 16/14
+Possible moves for x: 48, 23, 13, 41, 10, 39, 4, 3, 2, 38, 24, 31
+
+x plays to 13
+...****.
+.**oxxoo
+.*xxxxo.
+**xooxo.
+xoxoxx*.
+o*oxxx*.
+.oxx***.
+.*xx*...
+
+
+...........oxxoo..xxxxo...xooxo.xoxoxx..o.oxxx...oxx......xx.... 19/12
+Possible moves for o: 5, 38, 17, 53, 24, 46, 60, 10, 25, 52, 4, 57, 9, 54, 6, 41, 3
+
+o plays to 4
+..**o***
+...ooooo
+..xxoxo*
+*.xooxo*
+xoxoxx.*
+o*oxxx..
+*oxx....
+*.xx....
+
+
+....o......ooooo..xxoxo...xooxo.xoxoxx..o.oxxx...oxx......xx.... 16/16
+Possible moves for x: 48, 6, 23, 41, 5, 3, 39, 7, 56, 24, 31, 2
+
+x plays to 39
+....o...
+.**ooooo
+.*xxoxo.
+**xooxx*
+xoxoxx*x
+o*oxxx*.
+.oxx***.
+.*xx*...
+
+
+....o......ooooo..xxoxo...xooxx.xoxoxx.xo.oxxx...oxx......xx.... 18/15
+Possible moves for o: 38, 17, 53, 24, 46, 60, 10, 25, 52, 57, 9, 54, 41, 31
+
+o plays to 10
+.***o***
+.*oooooo
+.*oooxo*
+**oooxx.
+xoooxx.x
+o*oxxx..
+*oxx....
+*.xx....
+
+
+....o.....oooooo..oooxo...oooxx.xoooxx.xo.oxxx...oxx......xx.... 14/20
+Possible moves for x: 48, 9, 1, 41, 25, 3, 17, 2, 24, 23, 7, 56, 5, 6
+
+x plays to 48
+....o...
+..oooooo
+..oooxo.
+..oooxx*
+xoooxx*x
+x.oxxx*.
+xxxx***.
+**xx*...
+
+
+....o.....oooooo..oooxo...oooxx.xoooxx.xx.oxxx..xxxx......xx.... 17/18
+Possible moves for o: 52, 38, 53, 46, 60, 56, 57, 54, 31
+
+o plays to 53
+..**o***
+.*oooooo
+..ooooo.
+**oooox.
+xoooxo*x
+x*oxoo*.
+xxxx*o*.
+..xx....
+
+
+....o.....oooooo..ooooo...oooox.xoooxo.xx.oxoo..xxxx.o....xx.... 12/24
+Possible moves for x: 38, 9, 54, 52, 5, 41, 46, 25, 3, 7, 2, 24, 6
+
+x plays to 38
+....o...
+..oooooo
+..ooooo*
+..oooox*
+xoooxxxx
+x.oxoo**
+xxxx*o..
+**xx*...
+
+
+....o.....oooooo..ooooo...oooox.xoooxxxxx.oxoo..xxxx.o....xx.... 14/23
+Possible moves for o: 46, 31, 47, 57, 52, 60, 56, 23
+
+o plays to 31
+.***o*.*
+.*oooooo
+..ooooo*
+**oooooo
+xoooxxox
+x*oxoo*.
+xxxx*o*.
+..xx.*..
+
+
+....o.....oooooo..ooooo...ooooooxoooxxoxx.oxoo..xxxx.o....xx.... 12/26
+Possible moves for x: 9, 54, 52, 1, 23, 5, 61, 3, 41, 46, 25, 7, 2, 24
+
+x plays to 9
+*...o...
+*xoooooo
+.*xoooo.
+.*oxoooo
+xoooxxox
+x.oxoo**
+xxxx*o..
+**xx*...
+
+
+....o....xoooooo..xoooo...oxooooxoooxxoxx.oxoo..xxxx.o....xx.... 15/24
+Possible moves for o: 8, 25, 17, 46, 57, 47, 52, 60, 56, 0
+
+o plays to 52
+.***o***
+.xoooooo
+..xoooo*
+**oxoooo
+xoooxxox
+x*oooo..
+xxxxoo*.
+..xx**..
+
+
+....o....xoooooo..xoooo...oxooooxoooxxoxx.oooo..xxxxoo....xx.... 14/26
+Possible moves for x: 54, 60, 1, 23, 5, 61, 3, 7, 2, 24, 25, 6, 41
+
+x plays to 3
+*.*xo*..
+*xoxxooo
+.*xxoxo*
+.*oxooxo
+xoooxxox
+x.oooo**
+xxxxoo..
+**xx*...
+
+
+...xo....xoxxooo..xxoxo...oxooxoxoooxxoxx.oooo..xxxxoo....xx.... 20/21
+Possible moves for o: 2, 25, 8, 17, 5, 46, 47, 60, 56, 57, 23, 0
+
+o plays to 2
+.*ooo***
+.xooxooo
+..xxoxo*
+**oxooxo
+xoooxxox
+x*oooo*.
+xxxxoo*.
+..xx**..
+
+
+..ooo....xooxooo..xxoxo...oxooxoxoooxxoxx.oooo..xxxxoo....xx.... 18/24
+Possible moves for x: 54, 60, 61, 23, 1, 7, 5, 24, 25, 6, 41, 46
+
+x plays to 5
+*.ooox*.
+*xooxxoo
+**xxoxo*
+.*oxooxo
+xoooxxox
+x.oooo**
+xxxxoo..
+**xx*...
+
+
+..ooox...xooxxoo..xxoxo...oxooxoxoooxxoxx.oooo..xxxxoo....xx.... 20/23
+Possible moves for o: 16, 6, 8, 25, 17, 46, 47, 60, 56, 57, 23, 0
+
+o plays to 23
+.*ooox.*
+.xooxxoo
+..xxoxoo
+**oxoooo
+xoooxoox
+x*oooo*.
+xxxxoo*.
+..xx**..
+
+
+..ooox...xooxxoo..xxoxoo..oxooooxoooxooxx.oooo..xxxxoo....xx.... 18/26
+Possible moves for x: 54, 60, 1, 7, 46, 61, 24, 25, 41
+
+x plays to 54
+..ooox*.
+*xooxxoo
+**xxoxoo
+.*oxoooo
+xoooxoox
+x.ooox**
+xxxxxxx.
+**xx***.
+
+
+..ooox...xooxxoo..xxoxoo..oxooooxoooxooxx.ooox..xxxxxxx...xx.... 22/23
+Possible moves for o: 16, 6, 8, 25, 17, 47, 61, 60, 56, 57, 46, 62
+
+o plays to 6
+.*ooooo*
+.xooxooo
+.*xxoxoo
+**oxoooo
+xoooxoox
+x*ooox*.
+xxxxxxx.
+..xx....
+
+
+..ooooo..xooxooo..xxoxoo..oxooooxoooxooxx.ooox..xxxxxxx...xx.... 20/26
+Possible moves for x: 1, 46, 7, 25, 41, 24, 17
+
+x plays to 1
+*xooooo.
+*xxoxooo
+**xxoxoo
+.*oxoooo
+xoooxoox
+x.ooox**
+xxxxxxx.
+**xx***.
+
+
+.xooooo..xxoxooo..xxoxoo..oxooooxoooxooxx.ooox..xxxxxxx...xx.... 22/25
+Possible moves for o: 0, 16, 17, 8, 25, 47, 61, 60, 56, 57, 46, 62
+
+o plays to 0
+ooooooo*
+.xxoxooo
+.*xxoxoo
+**oxoooo
+xoooxoox
+x*ooox*.
+xxxxxxx.
+..xx....
+
+
+ooooooo..xxoxooo..xxoxoo..oxooooxoooxooxx.ooox..xxxxxxx...xx.... 21/27
+Possible moves for x: 46, 7, 25, 41, 24, 17
+
+x plays to 41
+ooooooo.
+*xxoxooo
+**xxoxoo
+.*oxoooo
+xoxoxoox
+xxxxxx.*
+xxxxxxx.
+**xx****
+
+
+ooooooo..xxoxooo..xxoxoo..oxooooxoxoxooxxxxxxx..xxxxxxx...xx.... 26/23
+Possible moves for o: 63, 17, 16, 8, 25, 60, 57, 47, 62, 56, 61
+
+o plays to 56
+ooooooo*
+.xxoxooo
+.*xxoxoo
+**oxoooo
+xoxoxoox
+xxoxxx*.
+xoxxxxx.
+o*xx....
+
+
+ooooooo..xxoxooo..xxoxoo..oxooooxoxoxooxxxoxxx..xoxxxxx.o.xx.... 24/26
+Possible moves for x: 46, 7, 25, 57, 17, 24
+
+x plays to 57
+ooooooo.
+*xxoxooo
+**xxoxoo
+**oxoooo
+xoxoxoox
+xxoxxx**
+xxxxxxx.
+oxxx****
+
+
+ooooooo..xxoxooo..xxoxoo..oxooooxoxoxooxxxoxxx..xxxxxxx.oxxx.... 26/25
+Possible moves for o: 63, 17, 16, 8, 25, 60, 47, 62, 61, 46, 24
+
+o plays to 46
+ooooooo*
+.xxoxooo
+.*xxoxoo
+**oxoooo
+xoxoxoox
+xxooooo*
+xxxxxxx*
+oxxx....
+
+
+ooooooo..xxoxooo..xxoxoo..oxooooxoxoxooxxxooooo.xxxxxxx.oxxx.... 23/29
+Possible moves for x: 55, 7, 25, 47, 24, 17
+
+x plays to 24
+ooooooo.
+*xxoxooo
+**xxoxoo
+x*oxoooo
+xxxoxoox
+xxxoooo*
+xxxxxxx.
+oxxx****
+
+
+ooooooo..xxoxooo..xxoxoox.oxooooxxxoxooxxxxoooo.xxxxxxx.oxxx.... 26/27
+Possible moves for o: 17, 16, 8, 25, 47, 61, 62, 60, 63
+
+o plays to 63
+ooooooo*
+.xxoxooo
+.*xxoxoo
+x*oxoooo
+xxxoxoox
+xxxoooo*
+xxxxxxo*
+oxxx...o
+
+
+ooooooo..xxoxooo..xxoxoox.oxooooxxxoxooxxxxoooo.xxxxxxo.oxxx...o 25/29
+Possible moves for x: 55, 7, 25, 47, 17
+
+x plays to 25
+ooooooo.
+*xxoxooo
+**xxoxoo
+xxxxoooo
+xxxoxoox
+xxxoooo*
+xxxxxxo.
+oxxx***o
+
+
+ooooooo..xxoxooo..xxoxooxxxxooooxxxoxooxxxxoooo.xxxxxxo.oxxx...o 27/28
+Possible moves for o: 17, 16, 8, 47, 61, 62, 60
+
+o plays to 17
+ooooooo*
+*oooxooo
+*ooooxoo
+xxoxoooo
+xxxoxoox
+xxxoooo*
+xxxxxxo*
+oxxx...o
+
+
+ooooooo..oooxooo.ooooxooxxoxooooxxxoxooxxxxoooo.xxxxxxo.oxxx...o 22/34
+Possible moves for x: 8, 16, 7, 47, 55
+
+
+x plays to 55
+ooooooo.
+.oooxooo
+*ooooxoo
+xxoxoooo
+xxxoxoox
+xxxoooo*
+xxxxxxxx
+xxxx***o
+
+
+ooooooo..oooxooo.ooooxooxxoxooooxxxoxooxxxxoooo.xxxxxxxxxxxx...o 25/32
+Possible moves for o: 47, 16, 61, 62, 60
+
+o plays to 61
+ooooooo*
+*oooxooo
+*ooooxoo
+xxoxoooo
+xxxoxoox
+xxxoooo*
+xxxxooxx
+xxxx*o.o
+
+
+ooooooo..oooxooo.ooooxooxxoxooooxxxoxooxxxxoooo.xxxxooxxxxxx.o.o 23/35
+Possible moves for x: 8, 16, 7, 60, 47
+
+x plays to 8
+ooooooo.
+xxxxxooo
+*ooooxoo
+xxoxoooo
+xxxoxoox
+xxxoooo*
+xxxxooxx
+xxxx.o*o
+
+
+ooooooo.xxxxxooo.ooooxooxxoxooooxxxoxooxxxxoooo.xxxxooxxxxxx.o.o 27/32
+Possible moves for o: 16, 47, 62
+
+o plays to 16
+ooooooo*
+ooxxxooo
+oooooxoo
+xooxoooo
+xxooxoox
+xxxoooo*
+xxxxooxx
+xxxx*o.o
+
+
+ooooooo.ooxxxooooooooxooxooxooooxxooxooxxxxoooo.xxxxooxxxxxx.o.o 23/37
+Possible moves for x: 47, 7, 60
+
+x plays to 7
+ooooooox
+ooxxxoxx
+oooooxox
+xooxooox
+xxooxoox
+xxxoooo*
+xxxxooxx
+xxxx.o*o
+
+
+oooooooxooxxxoxxoooooxoxxooxoooxxxooxooxxxxoooo.xxxxooxxxxxx.o.o 28/33
+Possible moves for o: 62, 47
+
+o plays to 47
+ooooooox
+ooxxxoxx
+oooooxox
+xooxooox
+xxooxoox
+xxxooooo
+xxxxoooo
+xxxx*o*o
+
+
+oooooooxooxxxoxxoooooxoxxooxoooxxxooxooxxxxoooooxxxxooooxxxx.o.o 26/36
+Possible moves for x: 62, 60
+
+x plays to 62
+ooooooox
+ooxxxoxx
+oooooxxx
+xooxooxx
+xxooxoxx
+xxxoooxo
+xxxxooxo
+xxxx*oxo
+
+
+oooooooxooxxxoxxoooooxxxxooxooxxxxooxoxxxxxoooxoxxxxooxoxxxx.oxo 32/31
+Possible moves for x: 60
+
+x plays to 60
+ooooooox
+ooxxxoxx
+oooooxxx
+xooxooxx
+xxooxoxx
+xxxoxoxo
+xxxxxxxo
+xxxxxxxo
+
+
+oooooooxooxxxoxxoooooxxxxooxooxxxxooxoxxxxxoxoxoxxxxxxxoxxxxxxxo 37/27
+saina@Sainas-MacBook-Air AI Code % 
