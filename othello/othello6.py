@@ -2,7 +2,7 @@ import sys; args = sys.argv[1:]
 #Saina Shibili
 LIMIT_NM = 11
 
-import time
+import time, random
 
 boardSize = 8
 negaMaxCount, possibleMovesCount, negaMaxLookUpCount = 0, 0, 0
@@ -183,11 +183,8 @@ def qmMakeMove(move, board, token, possibleMoves):
         print('Move not possible')
         return [], [], []
 
-    #otherwise:
-    print(token, "plays to", move)
-
     flippedBoard = flipTokens(board, possibleMoves[int(move)], token)
-    board = flippedBoard[:int(move)] + [token] + flippedBoard[int(move) + 1:]
+    board = ''.join(flippedBoard[:int(move)] + [token] + flippedBoard[int(move) + 1:])
     if token == 'x': token = 'o'
     else: token = 'x'
 
@@ -201,6 +198,7 @@ def qmMakeMove(move, board, token, possibleMoves):
     return possibleMoves, board, token
 #returns the ideal position for the token
 def quickMove(board, token):
+
     possibleMoves = possMoves(board, token)
 
     for i in cornerSquares:
@@ -275,11 +273,63 @@ def negaMax(board, token):
     return returnVal
 
 def runTournament():
-    print()
+    STARTTIME = time.process_time()
+    scores, tkn, myTkn, totalTkn, numWins = [], 'x', 0, 0, 0
+    for i in range(10):
+        tempScores = []
+        for j in range(10):
+            curScore = playGame(tkn)
+            tempScores.append(str(curScore[0]))
+            scores.append(curScore)
+            myTkn += curScore[2].count(tkn)
+            totalTkn += len(curScore[2].replace('.', ''))
+            if curScore[0] > 0: numWins += 1
+            tkn = "xo"[tkn == 'x']
+        print(' '.join(tempScores))
+        tempScores = []
 
-if __name__ == "main": main()
+    print(f'\nMy tokens: {myTkn}; Total tokens: {totalTkn}')
+    print(f'Score: {myTkn/totalTkn:.1%}')
+    print(f"NM/AB LIMIT: {LIMIT_NM}")
 
-main()
+    minScore = min(scores)
+    minIndex = scores.index(minScore)
+    minTkn = 'xo'[minIndex % 2]
+    print(f'Game {minIndex + 1} as {minTkn} => {minScore[0]}:\n {minScore[1]}')
+
+    scores.remove(minScore)
+    minScore = min(scores)
+    minIndex = scores.index(minScore)
+    minTkn = 'xo'[minIndex % 2]
+    print(f'Game {minIndex + 1} as {minTkn} => {minScore[0]}:\n {minScore[1]}')
+
+    print(f'Elapsed time: {time.process_time() - STARTTIME:2g}s')
+
+def playGame(tkn):
+    brd = '.' * 27 + 'ox......xo' + '.' * 27
+    curTkn = 'x'
+    transcript = []
+
+    while True:
+        if not (moves := possMoves(brd, curTkn)):
+            curTkn = 'xo'[curTkn == 'x']
+            if not(moves := possMoves(brd, curTkn)): break
+            transcript.append(-1)
+        if curTkn != tkn:
+            transcript.append(random.choice([*moves]))
+            brd = makeMove(transcript[-1], brd, curTkn, moves)
+        else:
+            if brd.count('.') < LIMIT_NM: transcript.append(negaMax(brd, curTkn)[-1])
+            else: transcript.append(quickMove(brd, curTkn))
+            brd = makeMove(transcript[-1], brd, curTkn, moves)
+        curTkn = 'xo'[curTkn == 'x']
+
+    score = brd.count(tkn) - brd.count('xo'[tkn == 'x'])
+    xscript = ''.join([f'_{mv}'[-2:] for mv in transcript])
+
+    return (score, xscript, brd)
+
+if __name__ == "__main__": main()
 
 # print(quickMove('xxxxxxo.xxxoxo.oxxxxooooxoxxoox.xxoxxxxxxxxxoxxoxxxxxxx.xxxxxxx.', 'o'))
 # print("Empty spaces:", 'xxxxxxo.xxxoxo.oxxxxooooxoxxoox.xxoxxxxxxxxxoxxoxxxxxxx.xxxxxxx.'.count('.'), "\nNegamax count:", negaMaxCount, "\nPossible moves count:", possibleMovesCount, "\nNegamax lookup count:", negaMaxLookUpCount)
