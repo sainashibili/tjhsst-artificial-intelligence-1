@@ -1,4 +1,6 @@
 import sys; args = sys.argv[1:]
+#Saina Shibili
+LIMIT_NM = 11
 
 import time
 
@@ -32,10 +34,35 @@ letterMove = {'a':0,'b':1,'c':2,'d':3,'e':4,'f':5,'g':6,'h':7}
 
 #main
 def main():
-    mainMethod(args)
+    if args:
+        #initialize board, token, listOfMoves if given
+        board, token, listOfMoves = parseArgs(args)
 
-#main method
-def mainMethod(arg):
+        #Othello 3
+        if listOfMoves != None:
+            for move in listOfMoves:
+                mv = int(move)
+                if mv < 0: continue
+                if not possMoves(board, token): token = 'xo'[token == 'x']
+                #printBoard(board)
+                board = makeMove(mv, board, token, possMoves(board, token))
+                token = 'xo'[token == 'x']
+
+        #Othello 4
+        if not possMoves(board, token): token = 'xo'[token == 'x']
+        printBoard(board)
+        print(f"My preferred move is {quickMove(board, token)}")
+
+        #Othello 5
+        if board.count('.') < LIMIT_NM:
+            optimal = negaMax(board, token) 
+            print(f"min score: {optimal[0]} list of moves: {optimal[1:]}")
+    else:
+        runTournament()
+
+
+#othello 3 --> parsing through the arguments
+def parseArgs(arg):
     #initialize board and the token
     board, token, move = None, None, None
     if len(arg) >= 3:
@@ -86,13 +113,7 @@ def mainMethod(arg):
         elif possX and not possO: token, setPossMoves, checkedPos = 'x', possX, True
         else: token, setPossMoves, checkedPos = 'o', possO, True
 
-    #make the moves
-    if not checkedPos: 
-        setPossMoves = possMoves(board, token)
-        if not setPossMoves: return print('No moves possible') #no possible moves case
-
-    makeFirstMove(board, token, setPossMoves)
-    makeSeveralMoves(move, board, token, setPossMoves)
+    return board, token, move
 
 #prints the board out
 def printBoard(board):
@@ -148,33 +169,13 @@ def flipTokens(board, flipTok, token):
         if board[i] != token: flippedBoard[i] = token
     return flippedBoard
 
-#prints out the information associated with the starting board
-def makeFirstMove(board, token, possibleMoves):
-    boardStr = [(board[i], '*')[i in possibleMoves] for i in range(boardSize ** 2)]
-
-    printBoard(''.join(boardStr))
-    print('\n')
-    print(f"{''.join(board)} {boardStr.count('x')}/{boardStr.count('o')}")
-    noBracketsPossMoves = ", ".join(str(pos) for pos in possibleMoves)
-    print(f"Possible moves for {token}: {noBracketsPossMoves}")
-
-#makes a series of moves, given the list of moves, the original board, and the original possMoves
-def makeSeveralMoves(listOfMoves, board, token, possibleMoves):
-
-    if listOfMoves == None: return
-
-    for move in listOfMoves:
-        if move != None and move[0].lower() in "abcdefgh":
-            move = (int(move[1]) - 1) * boardSize + letterMove[move[0].lower()]
-
-        if int(move) < 0: continue
-        possibleMoves, board, token = makeMove(move, board, token, possibleMoves)
-
-        if not possibleMoves: return
-
-#makes a move given a move, board, and token
+#makes a move given a move, board, and token, then returns the new board
 def makeMove(move, board, token, possibleMoves):
+    flippedBoard = flipTokens(board, possibleMoves[int(move)], token)
+    return ''.join(flippedBoard[:int(move)] + [token] + flippedBoard[int(move) + 1:])
 
+#special makeMove for othello 4 call
+def qmMakeMove(move, board, token, possibleMoves):
     #if there is no move, end here
     if move == None: return 
     #if the move isn't valid
@@ -196,53 +197,12 @@ def makeMove(move, board, token, possibleMoves):
         if p:
             token = ('o', 'x')[token == 'o']
             possibleMoves = p
-
-    boardStr = [(board[i], '*')[i in possibleMoves] for i in range(boardSize ** 2)]
-
-    printBoard(''.join(boardStr))
-    print('\n')
-    print(f"{''.join(board)} {boardStr.count('x')}/{boardStr.count('o')}")
-    if not possibleMoves:
-        return [], [], []
-    noBracketsPossMoves = ", ".join(str(pos) for pos in possibleMoves)
-    print(f"Possible moves for {token}: {noBracketsPossMoves}\n")
-
-    return possibleMoves, board, token
-
-#makes a move given a move, board, and token and doesn't print out the change in the board
-def makeMoveNoPrint(move, board, token, possibleMoves):
-    #if there is no move, end here
-    if move == None: return 
-    #if the move isn't valid
-    if int(move) not in possibleMoves: 
-        return [], [], []
-
-    flippedBoard = flipTokens(board, possibleMoves[int(move)], token)
-    board = ''.join(flippedBoard[:int(move)] + [token] + flippedBoard[int(move) + 1:])
-    if token == 'x': token = 'o'
-    else: token = 'x'
-
-    possibleMoves = possMoves(board, token)
-    if not possibleMoves:
-        p = possMoves(board, ('o', 'x')[token == 'o'])
-        if p:
-            token = ('o', 'x')[token == 'o']
-            possibleMoves = p
     
     return possibleMoves, board, token
-
 #returns the ideal position for the token
 def quickMove(board, token):
     possibleMoves = possMoves(board, token)
 
-    if board.count('.') < 11:
-        if board.count('.') == 10: 
-            print(othello4(board, token, possibleMoves))
-
-        optimal = alphabeta(board, token, -64, 64) 
-        return f"min score: {optimal[0]} list of moves: {optimal[1:]}"
-
-def othello4(board, token, possibleMoves):
     for i in cornerSquares:
         if i in possibleMoves: return i
         if board[i] != token: 
@@ -277,19 +237,13 @@ def othello4(board, token, possibleMoves):
 
     listOppMoves = []
     for move in possibleMoves:
-        possibleMoves2, board2, token2 = makeMoveNoPrint(move, board, token, possibleMoves)
+        possibleMoves2, board2, token2 = qmMakeMove(move, board, token, possibleMoves)
         if len(possibleMoves2) == 0: return move
         else: listOppMoves.append((len(possibleMoves2), move))
     return min(listOppMoves)[1]
 
-#makes a move given board, token, and the tokens needed to flip
-def negaMaxMove(board, token, move, possibleMoves):
-    flippedBoard = flipTokens(board, possibleMoves[int(move)], token)
-    return ''.join(flippedBoard[:int(move)] + [token] + flippedBoard[int(move) + 1:])
-
 #runs negamax to determine the optimal move
 def negaMax(board, token):
-
     global negaMaxCount, negaMaxCache, negaMaxLookUpCount
     negaMaxCount += 1
 
@@ -308,70 +262,53 @@ def negaMax(board, token):
 
     elif board.count('.') == 1:   #if there is only one empty space
         for move in possibleMoves: 
-            finalBoard = negaMaxMove(board, token, move, possibleMoves) #determines the final board
+            finalBoard = makeMove(move, board, token, possibleMoves) #determines the final board
             returnVal = [finalBoard.count(token) - finalBoard.count(eTkn), move] #returns the score and the final move
             negaMaxCache[key] = returnVal
             return returnVal
     
     if not possibleMoves: best = negaMax(board, eTkn) + [-1]    #if there are no possibleMoves, move to next token and return a pass(-1)
-    else: best = min(negaMax(negaMaxMove(board, token, move, possibleMoves), eTkn) + [move] for move in possibleMoves)  #otherwise return the min score of all the possibleMoves
+    else: best = min(negaMax(makeMove(move, board, token, possibleMoves), eTkn) + [move] for move in possibleMoves)  #otherwise return the min score of all the possibleMoves
     returnVal = [-best[0]] + best[1:]    #return the best score followed by the best move sequence
     negaMaxCache[key] = returnVal
 
     return returnVal
 
-def alphabeta(board, token, lwrBnd, uprBnd):
-    eTkn = ('x', 'o')[token == 'x'] #establishes opponent token
-    possibleMoves = possMoves(board, token) #possibleMoves
+def runTournament():
+    print()
 
-    if not possibleMoves:   #if possibleMoves are empty
-        if not possMoves(board, eTkn):  #if game is over    
-            return [board.count(token) - board.count(eTkn)] #return score
-        ab = alphabeta(board, eTkn, -uprBnd, -lwrBnd)   #recurs with opposite token
-        return ab
+if __name__ == "main": main()
 
-    best, bestMv = [lwrBnd - 1], -99 #initialize best so that something will be returned
-    for mv in possibleMoves:
-        ab = alphabeta(negaMaxMove(board, token, mv, possibleMoves), eTkn, -uprBnd, -lwrBnd)
-        score = -ab[0]
-        if score < lwrBnd: continue
-        if score > uprBnd: return [score]
-        best = [score]
-        lwrBnd = score + 1
+main()
 
-    return best
-
-
-#print(quickMove(args[0], args[1]))
-
-print(quickMove('xxxxxxo.xxxoxo.oxxxxooooxoxxoox.xxoxxxxxxxxxoxxoxxxxxxx.xxxxxxx.', 'o'))
-print("Empty spaces:", 'xxxxxxo.xxxoxo.oxxxxooooxoxxoox.xxoxxxxxxxxxoxxoxxxxxxx.xxxxxxx.'.count('.'), "\nNegamax count:", negaMaxCount, "\nPossible moves count:", possibleMovesCount, "\nNegamax lookup count:", negaMaxLookUpCount)
-negaMaxCount, possibleMovesCount, negaMaxLookUpCount = 0, 0, 0
-print()
-print(quickMove('xxxxxxo.xxxxxo..xxooooooxoxxooooxoxxooooxxxoxoooxxo.oxooxooooooo', 'x'))
-print("Empty spaces:", 'xxxxxxo.xxxxxo..xxooooooxoxxooooxoxxooooxxxoxoooxxo.oxooxooooooo'.count('.'), "\nNegamax count:", negaMaxCount, "\nPossible moves count:", possibleMovesCount, "\nNegamax lookup count:", negaMaxLookUpCount)
-negaMaxCount, possibleMovesCount, negaMaxLookUpCount = 0, 0, 0
-print()
-print(quickMove('oooxx.x.oxoxx.xx.xxxoxx.oxooxoxo.xoxoxx.xoxoxxx.oooooxxo.oooooxx', 'o'))
-print("Empty spaces:", 'oooxx.x.oxoxx.xx.xxxoxx.oxooxoxo.xoxoxx.xoxoxxx.oooooxxo.oooooxx'.count('.'), "\nNegamax count:", negaMaxCount, "\nPossible moves count:", possibleMovesCount, "\nNegamax lookup count:", negaMaxLookUpCount)
-negaMaxCount, possibleMovesCount, negaMaxLookUpCount = 0, 0, 0
-print()
-print(quickMove('oooo.ooo.ooooooo.ooooxoooooxoo.oooxxxoo.oooxxxx.oooooxx.ooooo...', 'x'))
-print("Empty spaces:", 'oooo.ooo.ooooooo.ooooxoooooxoo.oooxxxoo.oooxxxx.oooooxx.ooooo...'.count('.'), "\nNegamax count:", negaMaxCount, "\nPossible moves count:", possibleMovesCount, "\nNegamax lookup count:", negaMaxLookUpCount)
-negaMaxCount, possibleMovesCount, negaMaxLookUpCount = 0, 0, 0
-print()
-print(quickMove('.xoo..xo.xoo.xx.xxxxxoooxxxxooooxxooxoxoxxxxoxxooxxoooxo.x.o.oxx', 'o'))
-print("Empty spaces:", '.xoo..xo.xoo.xx.xxxxxoooxxxxooooxxooxoxoxxxxoxxooxxoooxo.x.o.oxx'.count('.'), "\nNegamax count:", negaMaxCount, "\nPossible moves count:", possibleMovesCount, "\nNegamax lookup count:", negaMaxLookUpCount)
-negaMaxCount, possibleMovesCount, negaMaxLookUpCount = 0, 0, 0
-print()
-print(quickMove('xxxooo..xxxxoo..xoxoxo.xxxxxxxxoooxoxoooooo.ox.ooooooooooxx.oooo', 'x'))
-print("Empty spaces:", 'xxxooo..xxxxoo..xoxoxo.xxxxxxxxoooxoxoooooo.ox.ooooooooooxx.oooo'.count('.'), "\nNegamax count:", negaMaxCount, "\nPossible moves count:", possibleMovesCount, "\nNegamax lookup count:", negaMaxLookUpCount)
-negaMaxCount, possibleMovesCount, negaMaxLookUpCount = 0, 0, 0
-print()
-print(quickMove('.xoooo.oxoo.oooxoxooxox.ooxxoxoooooooxoo.oooxx.o.ooooxxo.oooxxxx', 'x'))
-print("Empty spaces:", '.xoooo.oxoo.oooxoxooxox.ooxxoxoooooooxoo.oooxx.o.ooooxxo.oooxxxx'.count('.'), "\nNegamax count:", negaMaxCount, "\nPossible moves count:", possibleMovesCount, "\nNegamax lookup count:", negaMaxLookUpCount)
-negaMaxCount, possibleMovesCount, negaMaxLookUpCount = 0, 0, 0
-print()
+# print(quickMove('xxxxxxo.xxxoxo.oxxxxooooxoxxoox.xxoxxxxxxxxxoxxoxxxxxxx.xxxxxxx.', 'o'))
+# print("Empty spaces:", 'xxxxxxo.xxxoxo.oxxxxooooxoxxoox.xxoxxxxxxxxxoxxoxxxxxxx.xxxxxxx.'.count('.'), "\nNegamax count:", negaMaxCount, "\nPossible moves count:", possibleMovesCount, "\nNegamax lookup count:", negaMaxLookUpCount)
+# negaMaxCount, possibleMovesCount, negaMaxLookUpCount = 0, 0, 0
+# print()
+# print(quickMove('xxxxxxo.xxxxxo..xxooooooxoxxooooxoxxooooxxxoxoooxxo.oxooxooooooo', 'x'))
+# print("Empty spaces:", 'xxxxxxo.xxxxxo..xxooooooxoxxooooxoxxooooxxxoxoooxxo.oxooxooooooo'.count('.'), "\nNegamax count:", negaMaxCount, "\nPossible moves count:", possibleMovesCount, "\nNegamax lookup count:", negaMaxLookUpCount)
+# negaMaxCount, possibleMovesCount, negaMaxLookUpCount = 0, 0, 0
+# print()
+# print(quickMove('oooxx.x.oxoxx.xx.xxxoxx.oxooxoxo.xoxoxx.xoxoxxx.oooooxxo.oooooxx', 'o'))
+# print("Empty spaces:", 'oooxx.x.oxoxx.xx.xxxoxx.oxooxoxo.xoxoxx.xoxoxxx.oooooxxo.oooooxx'.count('.'), "\nNegamax count:", negaMaxCount, "\nPossible moves count:", possibleMovesCount, "\nNegamax lookup count:", negaMaxLookUpCount)
+# negaMaxCount, possibleMovesCount, negaMaxLookUpCount = 0, 0, 0
+# print()
+# print(quickMove('oooo.ooo.ooooooo.ooooxoooooxoo.oooxxxoo.oooxxxx.oooooxx.ooooo...', 'x'))
+# print("Empty spaces:", 'oooo.ooo.ooooooo.ooooxoooooxoo.oooxxxoo.oooxxxx.oooooxx.ooooo...'.count('.'), "\nNegamax count:", negaMaxCount, "\nPossible moves count:", possibleMovesCount, "\nNegamax lookup count:", negaMaxLookUpCount)
+# negaMaxCount, possibleMovesCount, negaMaxLookUpCount = 0, 0, 0
+# print()
+# print(quickMove('.xoo..xo.xoo.xx.xxxxxoooxxxxooooxxooxoxoxxxxoxxooxxoooxo.x.o.oxx', 'o'))
+# print("Empty spaces:", '.xoo..xo.xoo.xx.xxxxxoooxxxxooooxxooxoxoxxxxoxxooxxoooxo.x.o.oxx'.count('.'), "\nNegamax count:", negaMaxCount, "\nPossible moves count:", possibleMovesCount, "\nNegamax lookup count:", negaMaxLookUpCount)
+# negaMaxCount, possibleMovesCount, negaMaxLookUpCount = 0, 0, 0
+# print()
+# print(quickMove('xxxooo..xxxxoo..xoxoxo.xxxxxxxxoooxoxoooooo.ox.ooooooooooxx.oooo', 'x'))
+# print("Empty spaces:", 'xxxooo..xxxxoo..xoxoxo.xxxxxxxxoooxoxoooooo.ox.ooooooooooxx.oooo'.count('.'), "\nNegamax count:", negaMaxCount, "\nPossible moves count:", possibleMovesCount, "\nNegamax lookup count:", negaMaxLookUpCount)
+# negaMaxCount, possibleMovesCount, negaMaxLookUpCount = 0, 0, 0
+# print()
+# print(quickMove('.xoooo.oxoo.oooxoxooxox.ooxxoxoooooooxoo.oooxx.o.ooooxxo.oooxxxx', 'x'))
+# print("Empty spaces:", '.xoooo.oxoo.oooxoxooxox.ooxxoxoooooooxoo.oooxx.o.ooooxxo.oooxxxx'.count('.'), "\nNegamax count:", negaMaxCount, "\nPossible moves count:", possibleMovesCount, "\nNegamax lookup count:", negaMaxLookUpCount)
+# negaMaxCount, possibleMovesCount, negaMaxLookUpCount = 0, 0, 0
+# print()
 
 # print(quickMove('....x..oxxoxx.ooxxooxoooxxooxooo.xooxxoxxxxoxoxxxxxooxxxx.xoo.xx', 'x'))
 # print("Empty spaces:", 'xxxxxxo.xxxoxo.oxxxxooooxoxxoox.xxoxxxxxxxxxoxxoxxxxxxx.xxxxxxx.'.count('.'), "\nNegamax count:", negaMaxCount, "\nPossible moves count:", possibleMovesCount, "\nNegamax lookup count:", negaMaxLookUpCount)
