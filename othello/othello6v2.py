@@ -361,7 +361,12 @@ def playGame(tkn):
 # print(negaMax('xxxxxxo.xxxoxo.oxxxxooooxoxxoox.xxoxxxxxxxxxoxxoxxxxxxx.xxxxxxx.', 'o'))
 # print(alphabeta('xxxxxxo.xxxoxo.oxxxxooooxoxxoox.xxoxxxxxxxxxoxxoxxxxxxx.xxxxxxx.', 'o', -64, 64))
 
-if __name__ == "__main__": main()
+print(negaMax('oxooooo.oxxooo..oxoxoxo.oooooooooooooxooxoxxxoxoxox.xxooxxxxxxxo', 'o'))
+print(alphabeta('oxooooo.oxxooo..oxoxoxo.oooooooooooooxooxoxxxoxoxox.xxooxxxxxxxo', 'o', -64, 64))
+
+#if __name__ == "__main__": main()
+
+#printBoard('xxxxxxo.xxxoxo.oxxxxooooxoxxoox.xxoxxxxxxxxxoxxoxxxxxxx.xxxxxxx.')
 
 
 # print(quickMove('xxxxxxo.xxxoxo.oxxxxooooxoxxoox.xxoxxxxxxxxxoxxoxxxxxxx.xxxxxxx.', 'o'))
