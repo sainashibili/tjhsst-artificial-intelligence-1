@@ -55,7 +55,7 @@ def main():
 
         #Othello 5
         if board.count('.') < LIMIT_NM:
-            optimal = negaMax(board, token) 
+            optimal = alphabeta(board, token, -64, 64) 
             print(f"min score: {optimal[0]} list of moves: {optimal[1:]}")
     else:
         runTournament()
@@ -113,7 +113,7 @@ def parseArgs(arg):
         elif possX and not possO: token, setPossMoves, checkedPos = 'x', possX, True
         else: token, setPossMoves, checkedPos = 'o', possO, True
     
-    if len(move) == 1:
+    if move != None and len(move) == 1:
         condensedMoves = move[0]
         move = []
         for i in range(0,len(condensedMoves), 2):
@@ -247,6 +247,25 @@ def quickMove(board, token):
         else: listOppMoves.append((len(possibleMoves2), move))
     return min(listOppMoves)[1]
 
+#runs alphabeta to determine the optimal move
+def alphabeta(brd, tkn, lowerBound, upperBound):
+    possibleMoves, eTkn = possMoves(brd, tkn), 'xo'[tkn == 'xo']
+
+    if not possibleMoves:
+        if not possMoves(brd, eTkn): return [brd.count(tkn) - brd.count(eTkn)]
+        return alphabeta(brd, eTkn, -upperBound, -lowerBound) + [-1]
+
+    best = [lowerBound - 1]
+    for move in possibleMoves:
+        ab = alphabeta(makeMove(move, brd, tkn, possibleMoves), eTkn, -upperBound, -lowerBound)
+        score = -ab[0]
+        if score < lowerBound: continue
+        if score > upperBound: return [score]
+        best = [score, *ab[1:], move]
+        lowerBound = score + 1
+
+    return best
+
 #runs negamax to determine the optimal move
 def negaMax(board, token):
     global negaMaxCount, negaMaxCache, negaMaxLookUpCount
@@ -279,6 +298,7 @@ def negaMax(board, token):
 
     return returnVal
 
+#runs 100 games, prints out stats
 def runTournament():
     STARTTIME = time.process_time()
     scores, tkn, myTkn, totalTkn, numWins = [], 'x', 0, 0, 0
@@ -312,6 +332,7 @@ def runTournament():
 
     print(f'Elapsed time: {time.process_time() - STARTTIME:2g}s')
 
+#runs a singular game, returns the score, transcript, and board
 def playGame(tkn):
     brd = '.' * 27 + 'ox......xo' + '.' * 27
     curTkn = 'x'
@@ -336,7 +357,12 @@ def playGame(tkn):
 
     return (score, xscript, brd)
 
+# print(possMoves('xxxxxxo.xxxoxo.oxxxxooooxoxxoox.xxoxxxxxxxxxoxxoxxxxxxx.xxxxxxx.', 'o'))
+# print(negaMax('xxxxxxo.xxxoxo.oxxxxooooxoxxoox.xxoxxxxxxxxxoxxoxxxxxxx.xxxxxxx.', 'o'))
+# print(alphabeta('xxxxxxo.xxxoxo.oxxxxooooxoxxoox.xxoxxxxxxxxxoxxoxxxxxxx.xxxxxxx.', 'o', -64, 64))
+
 if __name__ == "__main__": main()
+
 
 # print(quickMove('xxxxxxo.xxxoxo.oxxxxooooxoxxoox.xxoxxxxxxxxxoxxoxxxxxxx.xxxxxxx.', 'o'))
 # print("Empty spaces:", 'xxxxxxo.xxxoxo.oxxxxooooxoxxoox.xxoxxxxxxxxxoxxoxxxxxxx.xxxxxxx.'.count('.'), "\nNegamax count:", negaMaxCount, "\nPossible moves count:", possibleMovesCount, "\nNegamax lookup count:", negaMaxLookUpCount)
