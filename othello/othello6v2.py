@@ -1,6 +1,6 @@
 import sys; args = sys.argv[1:]
 #Saina Shibili
-LIMIT_NM = 11
+LIMIT_AB = 13
 
 import time, random
 
@@ -54,12 +54,11 @@ def main():
         print(f"My preferred move is {quickMove(board, token)}")
 
         #Othello 5
-        if board.count('.') < LIMIT_NM:
+        if board.count('.') < LIMIT_AB:
             optimal = alphabeta(board, token, -64, 64) 
             print(f"min score: {optimal[0]} list of moves: {optimal[1:]}")
     else:
         runTournament()
-
 
 #othello 3 --> parsing through the arguments
 def parseArgs(arg):
@@ -99,11 +98,6 @@ def parseArgs(arg):
     setPossMoves, checkedPos = set(), False
     if board == None: board = '.' * 27 + 'ox......xo' + '.' * 27    #default board
     if token == None:   #default token
-        '''
-        ************************************************
-        DOESN'T CHECK FOR END CASE --> IF BOTH ARE EMPTY
-        ************************************************
-        '''
         possX = possMoves(board, 'x')
         possO = possMoves(board, 'o')
         if possX and possO:
@@ -249,19 +243,20 @@ def quickMove(board, token):
 
 #runs alphabeta to determine the optimal move
 def alphabeta(brd, tkn, lowerBound, upperBound):
-    possibleMoves, eTkn = possMoves(brd, tkn), 'xo'[tkn == 'xo']
+    possibleMoves, eTkn = possMoves(brd, tkn), 'xo'[tkn == 'x']
 
     if not possibleMoves:
         if not possMoves(brd, eTkn): return [brd.count(tkn) - brd.count(eTkn)]
-        return alphabeta(brd, eTkn, -upperBound, -lowerBound) + [-1]
+        ab = alphabeta(brd, eTkn, -upperBound, -lowerBound) + [-1]
+        return [-ab[0], ab[1:]]
 
     best = [lowerBound - 1]
     for move in possibleMoves:
         ab = alphabeta(makeMove(move, brd, tkn, possibleMoves), eTkn, -upperBound, -lowerBound)
         score = -ab[0]
         if score < lowerBound: continue
-        if score > upperBound: return [score]
-        best = [score, *ab[1:], move]
+        if score > upperBound: return [score] 
+        best = [score] + ab[1:] + [move]
         lowerBound = score + 1
 
     return best
@@ -317,7 +312,7 @@ def runTournament():
 
     print(f'\nMy tokens: {myTkn}; Total tokens: {totalTkn}')
     print(f'Score: {myTkn/totalTkn:.1%}')
-    print(f"NM/AB LIMIT: {LIMIT_NM}")
+    print(f"NM/AB LIMIT: {LIMIT_AB}")
 
     minScore = min(scores)
     minIndex = scores.index(minScore)
@@ -330,7 +325,7 @@ def runTournament():
     minTkn = 'xo'[minIndex % 2]
     print(f'Game {minIndex + 1} as {minTkn} => {minScore[0]}:\n {minScore[1]}')
 
-    print(f'Elapsed time: {time.process_time() - STARTTIME:2g}s')
+    print(f'Elapsed time: {round(time.process_time() - STARTTIME, 1)}s')
 
 #runs a singular game, returns the score, transcript, and board
 def playGame(tkn):
@@ -347,7 +342,7 @@ def playGame(tkn):
             transcript.append(random.choice([*moves]))
             brd = makeMove(transcript[-1], brd, curTkn, moves)
         else:
-            if brd.count('.') < LIMIT_NM: transcript.append(negaMax(brd, curTkn)[-1])
+            if brd.count('.') < LIMIT_AB: transcript.append(alphabeta(brd, curTkn, -64, 64)[-1])
             else: transcript.append(quickMove(brd, curTkn))
             brd = makeMove(transcript[-1], brd, curTkn, moves)
         curTkn = 'xo'[curTkn == 'x']
@@ -357,88 +352,6 @@ def playGame(tkn):
 
     return (score, xscript, brd)
 
-# print(possMoves('xxxxxxo.xxxoxo.oxxxxooooxoxxoox.xxoxxxxxxxxxoxxoxxxxxxx.xxxxxxx.', 'o'))
-# print(negaMax('xxxxxxo.xxxoxo.oxxxxooooxoxxoox.xxoxxxxxxxxxoxxoxxxxxxx.xxxxxxx.', 'o'))
-# print(alphabeta('xxxxxxo.xxxoxo.oxxxxooooxoxxoox.xxoxxxxxxxxxoxxoxxxxxxx.xxxxxxx.', 'o', -64, 64))
-
-print(negaMax('oxooooo.oxxooo..oxoxoxo.oooooooooooooxooxoxxxoxoxox.xxooxxxxxxxo', 'o'))
-print(alphabeta('oxooooo.oxxooo..oxoxoxo.oooooooooooooxooxoxxxoxoxox.xxooxxxxxxxo', 'o', -64, 64))
-
-#if __name__ == "__main__": main()
-
-#printBoard('xxxxxxo.xxxoxo.oxxxxooooxoxxoox.xxoxxxxxxxxxoxxoxxxxxxx.xxxxxxx.')
-
-
-# print(quickMove('xxxxxxo.xxxoxo.oxxxxooooxoxxoox.xxoxxxxxxxxxoxxoxxxxxxx.xxxxxxx.', 'o'))
-# print("Empty spaces:", 'xxxxxxo.xxxoxo.oxxxxooooxoxxoox.xxoxxxxxxxxxoxxoxxxxxxx.xxxxxxx.'.count('.'), "\nNegamax count:", negaMaxCount, "\nPossible moves count:", possibleMovesCount, "\nNegamax lookup count:", negaMaxLookUpCount)
-# negaMaxCount, possibleMovesCount, negaMaxLookUpCount = 0, 0, 0
-# print()
-# print(quickMove('xxxxxxo.xxxxxo..xxooooooxoxxooooxoxxooooxxxoxoooxxo.oxooxooooooo', 'x'))
-# print("Empty spaces:", 'xxxxxxo.xxxxxo..xxooooooxoxxooooxoxxooooxxxoxoooxxo.oxooxooooooo'.count('.'), "\nNegamax count:", negaMaxCount, "\nPossible moves count:", possibleMovesCount, "\nNegamax lookup count:", negaMaxLookUpCount)
-# negaMaxCount, possibleMovesCount, negaMaxLookUpCount = 0, 0, 0
-# print()
-# print(quickMove('oooxx.x.oxoxx.xx.xxxoxx.oxooxoxo.xoxoxx.xoxoxxx.oooooxxo.oooooxx', 'o'))
-# print("Empty spaces:", 'oooxx.x.oxoxx.xx.xxxoxx.oxooxoxo.xoxoxx.xoxoxxx.oooooxxo.oooooxx'.count('.'), "\nNegamax count:", negaMaxCount, "\nPossible moves count:", possibleMovesCount, "\nNegamax lookup count:", negaMaxLookUpCount)
-# negaMaxCount, possibleMovesCount, negaMaxLookUpCount = 0, 0, 0
-# print()
-# print(quickMove('oooo.ooo.ooooooo.ooooxoooooxoo.oooxxxoo.oooxxxx.oooooxx.ooooo...', 'x'))
-# print("Empty spaces:", 'oooo.ooo.ooooooo.ooooxoooooxoo.oooxxxoo.oooxxxx.oooooxx.ooooo...'.count('.'), "\nNegamax count:", negaMaxCount, "\nPossible moves count:", possibleMovesCount, "\nNegamax lookup count:", negaMaxLookUpCount)
-# negaMaxCount, possibleMovesCount, negaMaxLookUpCount = 0, 0, 0
-# print()
-# print(quickMove('.xoo..xo.xoo.xx.xxxxxoooxxxxooooxxooxoxoxxxxoxxooxxoooxo.x.o.oxx', 'o'))
-# print("Empty spaces:", '.xoo..xo.xoo.xx.xxxxxoooxxxxooooxxooxoxoxxxxoxxooxxoooxo.x.o.oxx'.count('.'), "\nNegamax count:", negaMaxCount, "\nPossible moves count:", possibleMovesCount, "\nNegamax lookup count:", negaMaxLookUpCount)
-# negaMaxCount, possibleMovesCount, negaMaxLookUpCount = 0, 0, 0
-# print()
-# print(quickMove('xxxooo..xxxxoo..xoxoxo.xxxxxxxxoooxoxoooooo.ox.ooooooooooxx.oooo', 'x'))
-# print("Empty spaces:", 'xxxooo..xxxxoo..xoxoxo.xxxxxxxxoooxoxoooooo.ox.ooooooooooxx.oooo'.count('.'), "\nNegamax count:", negaMaxCount, "\nPossible moves count:", possibleMovesCount, "\nNegamax lookup count:", negaMaxLookUpCount)
-# negaMaxCount, possibleMovesCount, negaMaxLookUpCount = 0, 0, 0
-# print()
-# print(quickMove('.xoooo.oxoo.oooxoxooxox.ooxxoxoooooooxoo.oooxx.o.ooooxxo.oooxxxx', 'x'))
-# print("Empty spaces:", '.xoooo.oxoo.oooxoxooxox.ooxxoxoooooooxoo.oooxx.o.ooooxxo.oooxxxx'.count('.'), "\nNegamax count:", negaMaxCount, "\nPossible moves count:", possibleMovesCount, "\nNegamax lookup count:", negaMaxLookUpCount)
-# negaMaxCount, possibleMovesCount, negaMaxLookUpCount = 0, 0, 0
-# print()
-
-# print(quickMove('....x..oxxoxx.ooxxooxoooxxooxooo.xooxxoxxxxoxoxxxxxooxxxx.xoo.xx', 'x'))
-# print("Empty spaces:", 'xxxxxxo.xxxoxo.oxxxxooooxoxxoox.xxoxxxxxxxxxoxxoxxxxxxx.xxxxxxx.'.count('.'), "\nNegamax count:", negaMaxCount, "\nPossible moves count:", possibleMovesCount, "\nNegamax lookup count:", negaMaxLookUpCount)
-# negaMaxCount, possibleMovesCount, negaMaxLookUpCount = 0, 0, 0
-# print()
-
-#************************************************************
-# min score: -48 list of moves: [7, -1, 14, 31, 63, 55]
-# Empty spaces: 5 
-# Negamax count: 45 
-# Possible moves count: 58
-
-# min score: 18 list of moves: [15, -1, 7, -1, 14, -1, 51]
-# Empty spaces: 4 
-# Negamax count: 28 
-# Possible moves count: 36
-
-# min score: 14 list of moves: [16, 32, 39, 23, 13, 47, 5, 56, 7]
-# Empty spaces: 9 
-# Negamax count: 58202 
-# Possible moves count: 60762
-
-# min score: -30 list of moves: [4, -1, 8, 63, 16, 62, 55, 47, 39, 30, 61]
-# Empty spaces: 10 
-# Negamax count: 617749 
-# Possible moves count: 678229
-
-# min score: -6 list of moves: [0, 5, 60, 58, 56, 15, 8, 12, 4]
-# Empty spaces: 9 
-# Negamax count: 87689 
-# Possible moves count: 94962
-
-# min score: -9 list of moves: [6, 14, 22, 15, 46, 43, 59]
-# Empty spaces: 8 
-# Negamax count: 16046 
-# Possible moves count: 16752
-
-# min score: 24 list of moves: [6, -1, 48, -1, 56, -1, 23, 11, 40, 46, 0]
-# Empty spaces: 8 
-# Negamax count: 26888 
-# Possible moves count: 28944
-#************************************************************
-
+if __name__ == "__main__": main()
 
 #Saina Shibili, 6, 2023 
