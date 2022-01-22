@@ -1,8 +1,10 @@
 import sys; args = sys.argv[1:]
 #Saina Shibili
-LIMIT_AB = 13
+LIMIT_AB = 12
 
 import time, random
+
+specialCaseCount = 0
 
 boardSize = 8
 negaMaxCount, possibleMovesCount, negaMaxLookUpCount = 0, 0, 0
@@ -51,6 +53,10 @@ def main():
         #Othello 4
         if not possMoves(board, token): token = 'xo'[token == 'x']
         printBoard(board)
+        print()
+        eTkn = 'xo'[token == 'x']
+        print(f'{board} {board.count(token)}/{board.count(eTkn)}')
+        print(f'Possible moves for {token}: {[*possMoves(board, token)]}')
         print(f"My preferred move is {quickMove(board, token)}")
 
         #Othello 5
@@ -164,6 +170,7 @@ def possMoves(board, token):
     possMovesLookup[(board, token)] = posLoc
     return posLoc
 
+#flips the tokens given a board, the tokens to flip, and the token in play
 def flipTokens(board, flipTok, token):
     flippedBoard = [tok for tok in board]
     for i in flipTok: 
@@ -243,12 +250,19 @@ def quickMove(board, token):
 
 #runs alphabeta to determine the optimal move
 def alphabeta(brd, tkn, lowerBound, upperBound):
+    global specialCaseCount
     possibleMoves, eTkn = possMoves(brd, tkn), 'xo'[tkn == 'x']
 
     if not possibleMoves:
         if not possMoves(brd, eTkn): return [brd.count(tkn) - brd.count(eTkn)]
         ab = alphabeta(brd, eTkn, -upperBound, -lowerBound) + [-1]
         return [-ab[0], ab[1:]]
+
+    if brd.count('.') == 1:   #if there is only one empty space
+        specialCaseCount += 1
+        for move in possibleMoves: 
+            finalBoard = makeMove(move, brd, tkn, possibleMoves) #determines the final board
+            return [finalBoard.count(tkn) - finalBoard.count(eTkn), move] #returns the score and the final move
 
     best = [lowerBound - 1]
     for move in possibleMoves:
@@ -353,5 +367,6 @@ def playGame(tkn):
     return (score, xscript, brd)
 
 if __name__ == "__main__": main()
+print("Special Case Count: ", specialCaseCount)
 
 #Saina Shibili, 6, 2023 
